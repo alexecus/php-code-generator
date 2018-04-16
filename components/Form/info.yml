@@ -1,0 +1,27 @@
+form:  
+  name: Form
+  description: Generates a form plugin
+
+  inputs:
+    - ask:
+        id: name
+        message: What is the form name ?
+        defaults: DefaultForm
+        normalizers:
+          - trim
+        validators:
+          - not empty:
+              message: Name of the form should not be empty
+          - ends with:
+              message: The form name should end with the word Form
+              arguments: ['Form']
+
+    - confirm:
+        message: Do you confirm generation ?
+
+  actions:
+    - copy:
+        source: template/Form.php.twig
+        target: src/Form/{form_name}.php
+        replacements:
+          form_name: name
