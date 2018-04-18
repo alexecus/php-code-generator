@@ -1,12 +1,15 @@
 {
-    "name": "alexecus/generator",
-    "description": "A component to allow you to generate boilerplate code",
+    "name": "alexecus/spawner",
+    "description": "Spawner is a PHP console application that lets you spawn boilerplate code for any component",
     "type": "library",
+    "keywords": ["php", "boilerplate", "generator"],
+    "homepage": "https://github.com/alexecus/spawner",
     "license": "MIT",
     "authors": [
         {
             "name": "alexecus",
-            "email": "alex.tenepere@gmail.com"
+            "email": "alex.tenepere@gmail.com",
+            "role": "Developer"
         }
     ],
     "require": {
@@ -19,8 +22,13 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/",
+            "Alexecus\\Spawner\\": "src/",
             "Components\\": "components/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Alexecus\\Example\\": "example/"
         }
     }
 }

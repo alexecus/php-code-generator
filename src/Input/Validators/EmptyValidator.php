@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Input\Validators;
+namespace Alexecus\Spawner\Input\Validators;
 
 class EmptyValidator extends AbstractValidator
 {

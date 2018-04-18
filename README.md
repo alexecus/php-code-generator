@@ -1,3 +1,3 @@
-# PHP Codegen
+# Spawner
 
-Generate boilerplate code to any PHP application
+Spawner is a PHP console application that lets you spawn boilerplate code for any component

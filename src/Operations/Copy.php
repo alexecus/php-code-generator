@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Operations;
+namespace Alexecus\Spawner\Operations;
 
 use Symfony\Component\Filesystem\Filesystem;
 
-use App\Path;
-use App\Render\Twig;
+use Alexecus\Spawner\Path;
+use Alexecus\Spawner\Render\Twig;
 
 class Copy
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Command;
+namespace Alexecus\Spawner\Command;
 
 use Symfony\Component\Console\Command\Command as Base;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Operations;
+namespace Alexecus\Spawner\Operations;
 
 interface OperationInterface
 {

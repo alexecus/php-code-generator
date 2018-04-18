@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Input;
+namespace Alexecus\Spawner\Input;
 
 use Symfony\Component\Console\Question\Question;
 
-use App\Input\Validators\EmptyValidator;
+use Alexecus\SpawnerInput\Validators\EmptyValidator;
 
 class AskCommand
 {

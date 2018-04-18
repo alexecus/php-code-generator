@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Command;
+namespace Alexecus\Spawner\Command;
 
 use Symfony\Component\Console\Question\Question;
 
-use App\Input\AskCommand;
+use Alexecus\Spawner\Input\AskCommand;
 
 trait CommandTrait
 {
