@@ -1,0 +1,34 @@
+{
+    "name": "alexecus/spawner",
+    "description": "Spawner is a PHP console application that lets you spawn boilerplate code for any component",
+    "type": "library",
+    "keywords": ["php", "boilerplate", "generator"],
+    "homepage": "https://github.com/alexecus/spawner",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "alexecus",
+            "email": "alex.tenepere@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "symfony/console": "^4.0",
+        "symfony/finder": "^4.0",
+        "twig/twig": "^2.0",
+        "php-di/php-di": "^6.0",
+        "symfony/filesystem": "^4.0",
+        "symfony/yaml": "^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Alexecus\\Spawner\\": "src/",
+            "Components\\": "components/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Alexecus\\Example\\": "example/"
+        }
+    }
+}
