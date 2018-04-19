@@ -17,11 +17,27 @@ form:
               arguments: ['Form']
 
     - confirm:
+        id: twig
+        message: Do you want to have a twig template also ?
+
+    - ask:
+        id: path
+        message: What is the path ?
+        defaults: /src/Form
+
+    - confirm:
+        id: confirm
         message: Do you confirm generation ?
+        terminate: yes
 
   actions:
-    - copy:
+    - template:
         source: template/Form.php.twig
-        target: src/Form/{form_name}.php
+        target: {path}/{name}.php
         replacements:
           form_name: name
+
+    - copy:
+        if: twig
+        source: template/template.twig
+        target: {path}/template.twig
