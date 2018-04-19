@@ -9,6 +9,7 @@ use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 use Alexecus\Spawner\Command\Command;
+use Alexecus\Spawner\Operations\Template;
 use Alexecus\Spawner\Operations\Copy;
 
 use Alexecus\Spawner\Input\Validators\EmptyValidator;
@@ -20,14 +21,15 @@ use Alexecus\Spawner\Input\Validators\EmptyValidator;
 class FormGenerator extends Command
 {
     /**
-     * @var Copy
+     * @var Template
      */
-    private $copy;
+    private $template;
         
-    public function __construct(Copy $copy)
+    public function __construct(Template $template, Copy $copy)
     {
         parent::__construct();
 
+        $this->template = $template;
         $this->copy = $copy;
     }
 
@@ -38,8 +40,7 @@ class FormGenerator extends Command
     {
         $this
             ->setName('generate:form')
-            ->setDescription('Generates a new form plugin')
-        ;
+            ->setDescription('Generates a new form plugin');
     }
 
     /**
@@ -51,19 +52,42 @@ class FormGenerator extends Command
             new EmptyValidator('Form should not be empty'),
         ]);
 
-        $name = $this->ask('What is the name of the form ?', 'ContactForm');
+        // inputs
 
+        $name = $this->ask('What is the name of the form ?', 'ContactForm');
+        $isTemplate = $this->confirm('Do you want to generate a template file ?');
         $confirm = $this->confirm('Do you confirm form generation ?');
 
+        // actions
+
         if ($confirm) {
+            if ($isTemplate) {
+                $this->createTemplate($path, $name);
+            }
+
             $this->createForm($path, $name);
             $this->success("The form $name was generated");
         }
     }
 
     /**
+     * Creates the template file
+     *
+     * @param string $path The namespace path
+     * @param string $name The name of the form
+     */
+    private function createTemplate($path, $name)
+    {
+        $source = __DIR__ . '/template/template.html.twig';
+        $target = "$path/$name.html.twig";
+
+        $this->copy->perform($source, $target);
+    }
+
+    /**
      * Creates the form class
      *
+     * @param string $path The namespace path
      * @param string $name The name of the form
      */
     private function createForm($path, $name)
@@ -75,6 +99,6 @@ class FormGenerator extends Command
             'form_name' => $name,
         ];
 
-        $this->copy->perform($source, $target, $replacements);
+        $this->template->perform($source, $target, $replacements);
     }
 }
