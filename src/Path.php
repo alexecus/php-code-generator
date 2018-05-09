@@ -21,7 +21,7 @@ class Path
      */
     public function setRoot($root)
     {
-        $this->root = $root;
+        $this->root = rtrim($root, '/');
     }
 
     /**
@@ -43,6 +43,6 @@ class Path
      */
     public function absolute($path)
     {
-        return $this->getRoot() . '/' . ltrim($path, '/');
+        return rtrim($this->getRoot(), '/') . '/' . trim($path, '/');
     }
 }

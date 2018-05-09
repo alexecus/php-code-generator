@@ -5,11 +5,31 @@ namespace Alexecus\Spawner;
 use Symfony\Component\Console\Application as Console;
 use DI\Container;
 
+use Alexecus\Spawner\Operations\Append;
+use Alexecus\Spawner\Operations\Copy;
+use Alexecus\Spawner\Operations\Template;
+
 /**
  * Class that bootstraps the generator application
  */
 class Application
 {
+    /**
+     * Defines the available operations
+     *
+     * @var array
+     */
+    const OPERATIONS = [
+        'copy'      => Copy::class,
+        'append'    => Append::class,
+        'template'  => Template::class,
+    ];
+
+    /**
+     * Stores the command
+     *
+     * @var array
+     */
     private $commands = [];
 
     public function __construct($name = 'Spawner', $version = '1.0')
@@ -17,6 +37,16 @@ class Application
         $this->console = new Console($name, $version);
         $this->container = new Container();
         $this->path = new Path();
+    }
+
+    /**
+     * Gets the symfony console object
+     *
+     * @return Symfony\Component\Console\Application
+     */
+    public function getConsole()
+    {
+        return $this->console;
     }
 
     /**
@@ -46,12 +76,29 @@ class Application
     {
         $this->container->set(Path::class, $this->path);
 
+        $operations = [];
+
+        foreach (self::OPERATIONS as $key => $value) {
+            $operations[$key] = $this->container->get($value);
+        }
+
         foreach ($this->commands as $command) {
-            $this->console->add(
-                $this->container->get($command)
-            );
+            $instance = $this->container->get($command);
+            $instance->setOperations($operations);
+
+            $this->console->add($instance);
         }
 
         $this->console->run();
+    }
+
+    /**
+     * Gets all registered commands
+     *
+     * @return array
+     */
+    public function getCommands()
+    {
+        return $this->commands;
     }
 }

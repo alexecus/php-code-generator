@@ -10,7 +10,7 @@ abstract class AbstractValidator
      * @param string $value
      * @return boolean
      */
-    abstract public function validate($value);
+    abstract public function validate($value, $options);
 
     public function __construct($message)
     {

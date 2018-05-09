@@ -6,7 +6,7 @@ use Symfony\Component\Console\Question\Question;
 
 use Alexecus\Spawner\Input\AskCommand;
 
-trait CommandTrait
+trait CommandInputs
 {
     /**
      *

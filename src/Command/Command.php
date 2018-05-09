@@ -10,7 +10,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 abstract class Command extends Base
 {
-    use CommandTrait;
+    use CommandInputs;
+    use CommandOperations;
 
     /**
      * @var SymfonyStyle

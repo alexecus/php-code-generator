@@ -5,13 +5,8 @@ namespace Alexecus\Example\Form;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\Question;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 use Alexecus\Spawner\Command\Command;
-use Alexecus\Spawner\Operations\Template;
-use Alexecus\Spawner\Operations\Copy;
-
 use Alexecus\Spawner\Input\Validators\EmptyValidator;
 
 /**
@@ -20,19 +15,6 @@ use Alexecus\Spawner\Input\Validators\EmptyValidator;
  */
 class FormGenerator extends Command
 {
-    /**
-     * @var Template
-     */
-    private $template;
-        
-    public function __construct(Template $template, Copy $copy)
-    {
-        parent::__construct();
-
-        $this->template = $template;
-        $this->copy = $copy;
-    }
-
     /**
      * @{inheritdoc}
      */
@@ -49,7 +31,7 @@ class FormGenerator extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $path = $this->ask('Where to generate this form ?', '/src/Form', [
-            new EmptyValidator('Form should not be empty'),
+            'empty' => ['message' => 'Form should not be empty'],
         ]);
 
         // inputs
@@ -64,10 +46,27 @@ class FormGenerator extends Command
             if ($isTemplate) {
                 $this->createTemplate($path, $name);
             }
+            
+            $this->appendScript($name);
 
             $this->createForm($path, $name);
             $this->success("The form $name was generated");
         }
+    }
+
+    private function appendScript($name)
+    {
+        $source = __DIR__ . '/script.ts';
+
+        $text = "    'this is my own list {name}',\n    ";
+
+        $pattern = '/list = \[(.*)];/s';
+
+        $replacements = [
+            'name' => $name,
+        ];
+
+        $this->operation('append')->perform($source, $text, $pattern, $replacements);
     }
 
     /**
@@ -81,7 +80,7 @@ class FormGenerator extends Command
         $source = __DIR__ . '/template/template.html.twig';
         $target = "$path/$name.html.twig";
 
-        $this->copy->perform($source, $target);
+        $this->operation('copy')->perform($source, $target);
     }
 
     /**
@@ -99,6 +98,6 @@ class FormGenerator extends Command
             'form_name' => $name,
         ];
 
-        $this->template->perform($source, $target, $replacements);
+        $this->operation('template')->perform($source, $target, $replacements);
     }
 }
