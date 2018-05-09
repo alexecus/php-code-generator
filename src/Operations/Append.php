@@ -2,28 +2,8 @@
 
 namespace Alexecus\Spawner\Operations;
 
-use Symfony\Component\Filesystem\Filesystem;
-
-use Alexecus\Spawner\Path;
-
 class Append
 {
-    /**
-     * @var Filesystem
-     */
-    private $filesystem;
-
-    /**
-     * @var Path
-     */
-    private $path;
-
-    public function __construct(Filesystem $filesystem, Path $path)
-    {
-        $this->filesystem = $filesystem;
-        $this->path = $path;
-    }
- 
     /**
      * Performs the append operation
      *

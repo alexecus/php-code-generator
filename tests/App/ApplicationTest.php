@@ -1,8 +1,8 @@
 <?php
 
-namespace Alexecus\Spawner\Tests;
+namespace Alexecus\Spawner\Tests\App;
 
-use Alexecus\Spawner\Application;
+use Alexecus\Spawner\App\Application;
 use Symfony\Component\Console\Application as Console;
 
 use PHPUnit\Framework\TestCase;

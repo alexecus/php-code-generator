@@ -5,6 +5,8 @@ namespace Alexecus\Spawner\Input;
 use Symfony\Component\Console\Question\Question;
 
 use Alexecus\Spawner\Input\Validators\EmptyValidator;
+use Alexecus\Spawner\Input\Validators\EndsWithValidator;
+use Alexecus\Spawner\Input\Validators\StartsWithValidator;
 
 class AskCommand
 {
@@ -13,8 +15,10 @@ class AskCommand
      *
      * @var array
      */
-    const VALIDATORS = [
+    private $validators = [
         'empty' => EmptyValidator::class,
+        'ends_with' => EndsWithValidator::class,
+        'starts_with' => StartsWithValidator::class,
     ];
 
     public function __construct($style)
@@ -27,8 +31,8 @@ class AskCommand
         $question = new Question($message, $default);
 
         foreach ($validators as $key => $validator) {
-            if (isset(self::VALIDATORS[$key]) && isset($validator['message'])) {
-                $class = self::VALIDATORS[$key];
+            if (isset($this->validators[$key]) && isset($validator['message'])) {
+                $class = $this->validators[$key];
                 $instance = new $class($validator['message']);
 
                 $options = $validator['options'] ?? [];

@@ -1,16 +1,16 @@
 <?php
 
-namespace Alexecus\Spawner\Tests;
+namespace Alexecus\Spawner\Tests\Resolver;
 
-use Alexecus\Spawner\Path;
+use Alexecus\Spawner\Resolver\PathResolver;
 
 use PHPUnit\Framework\TestCase;
 
-class PathTest extends TestCase
+class PathResolverTest extends TestCase
 {
     public function testSetRoot()
     {
-        $path = new Path();
+        $path = new PathResolver();
         $path->setRoot('/var/www/html');
 
         $this->assertEquals('/var/www/html', $path->getRoot());
@@ -22,7 +22,7 @@ class PathTest extends TestCase
 
     public function testAbsolute()
     {
-        $path = new Path();
+        $path = new PathResolver();
         $path->setRoot('/var/www/html');
 
         $absolute = $path->absolute('example/path');

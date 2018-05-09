@@ -4,7 +4,7 @@ namespace Alexecus\Spawner\Operations;
 
 use Symfony\Component\Filesystem\Filesystem;
 
-use Alexecus\Spawner\Path;
+use Alexecus\Spawner\Resolver\PathResolver;
 
 class Copy
 {
@@ -14,11 +14,11 @@ class Copy
     private $filesystem;
 
     /**
-     * @var Path
+     * @var PathResolver
      */
     private $path;
 
-    public function __construct(Filesystem $filesystem, Path $path)
+    public function __construct(Filesystem $filesystem, PathResolver $path)
     {
         $this->filesystem = $filesystem;
         $this->path = $path;

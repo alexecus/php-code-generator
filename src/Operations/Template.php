@@ -4,8 +4,8 @@ namespace Alexecus\Spawner\Operations;
 
 use Symfony\Component\Filesystem\Filesystem;
 
-use Alexecus\Spawner\Path;
 use Alexecus\Spawner\Render\Twig;
+use Alexecus\Spawner\Resolver\PathResolver;
 
 class Template
 {
@@ -20,11 +20,11 @@ class Template
     private $filesystem;
 
     /**
-     * @var Path
+     * @var PathResolver
      */
     private $path;
 
-    public function __construct(Twig $twig, Filesystem $filesystem, Path $path)
+    public function __construct(Twig $twig, Filesystem $filesystem, PathResolver $path)
     {
         $this->twig = $twig;
         $this->filesystem = $filesystem;

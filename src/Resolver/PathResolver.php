@@ -1,11 +1,11 @@
 <?php
 
-namespace Alexecus\Spawner;
+namespace Alexecus\Spawner\Resolver;
 
 /**
  * Handles generation of paths
  */
-class Path
+class PathResolver
 {
     /**
      * @var string
