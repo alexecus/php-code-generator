@@ -12,6 +12,7 @@ use Alexecus\Spawner\Resolver\PathResolver;
  */
 class Application
 {
+    use DefinitionsTrait;
     use OperationsTrait;
 
     /**
@@ -46,12 +47,8 @@ class Application
     public function setRoot($path)
     {
         $this->path->setRoot($path);
+        $this->container->set(PathResolver::class, $this->path);
     }
-
-    /**
-     * Commands
-     *
-     */
 
     /**
      * Inserts a new console command
@@ -60,15 +57,7 @@ class Application
      */
     public function add($command)
     {
-        $this->commands[] = $command;
-    }
-
-    /**
-     * Inserts a definition file
-     */
-    public function definition($source)
-    {
-
+        $this->commands[] = $this->container->get($command);
     }
 
     /**
@@ -86,8 +75,6 @@ class Application
      */
     public function run()
     {
-        $this->container->set(PathResolver::class, $this->path);
-
         $operations = [];
 
         foreach ($this->operations as $key => $value) {
@@ -95,10 +82,9 @@ class Application
         }
 
         foreach ($this->commands as $command) {
-            $instance = $this->container->get($command);
-            $instance->setOperations($operations);
+            $command->setOperations($operations);
 
-            $this->console->add($instance);
+            $this->console->add($command);
         }
 
         $this->console->run();

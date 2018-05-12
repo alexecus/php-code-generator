@@ -41,11 +41,11 @@ actions:
 
     - template:
         source: template/Form.php.twig
-        target: {path}/{name}.php
+        target: /{path}/{name}.php"
         replacements:
             form_name: name
 
     - copy:
         if: confirm_twig
         source: template/template.twig
-        target: {path}/template.twig
+        target: /{path}/template.twig

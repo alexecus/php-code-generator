@@ -23,7 +23,7 @@ class Copy
         $this->filesystem = $filesystem;
         $this->path = $path;
     }
- 
+
     /**
      * Performs the copy operation
      *
