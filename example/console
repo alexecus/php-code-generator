@@ -5,9 +5,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 $app = new \Alexecus\Spawner\App\Application();
 
-$app->setRoot(__DIR__);
-
-$app->definition('Form/definition.yml');
+$app->definition(__DIR__ . '/Form/definition.yml', __DIR__);
 // $app->add(\Alexecus\Example\Form\FormGenerator::class);
 
 $app->run();
