@@ -5,8 +5,6 @@ namespace Alexecus\Spawner\App;
 use Symfony\Component\Console\Application as Console;
 use DI\Container;
 
-use Alexecus\Spawner\Resolver\PathResolver;
-
 /**
  * Class that bootstraps the generator application
  */
@@ -26,7 +24,6 @@ class Application
     {
         $this->console = new Console($name, $version);
         $this->container = new Container();
-        $this->path = new PathResolver();
     }
 
     /**
@@ -37,17 +34,6 @@ class Application
     public function getConsole()
     {
         return $this->console;
-    }
-
-    /**
-     * Sets the root path for generation
-     *
-     * @param string $path
-     */
-    public function setRoot($path)
-    {
-        $this->path->setRoot($path);
-        $this->container->set(PathResolver::class, $this->path);
     }
 
     /**

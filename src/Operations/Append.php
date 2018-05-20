@@ -2,22 +2,16 @@
 
 namespace Alexecus\Spawner\Operations;
 
-class Append
+class Append extends AbstractOperation
 {
     /**
      * Performs the append operation
      *
      * @param string $target The file path
      */
-    public function perform($target, $text, $pattern, $replacements = [])
+    public function perform($target, $text, $pattern)
     {
         $body = file_get_contents($target);
-
-        $text = preg_replace_callback('/\{(.*?)\}/', function ($matches) use ($replacements) {
-            list($string, $match) = $matches;
-
-            return $replacements[$match] ?? $string;
-        }, $text);
 
         $replacement = preg_replace_callback($pattern, function ($matches) use ($text) {
             list($string, $match) = $matches;

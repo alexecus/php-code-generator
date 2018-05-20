@@ -2,7 +2,6 @@
 
 namespace Alexecus\Spawner\App;
 
-use Symfony\Component\Yaml\Yaml;
 use Alexecus\Spawner\Definition\DefinitionCommand;
 
 
@@ -16,12 +15,8 @@ trait DefinitionsTrait
     /**
      * Inserts a definition file
      */
-    public function definition($source)
+    public function definition($source, $root)
     {
-        $file = Yaml::parse(
-            file_get_contents($this->path->absolute($source))
-        );
-
-        $this->commands[] = new DefinitionCommand($file);
+        $this->commands[] = new DefinitionCommand($source, $root);
     }
 }

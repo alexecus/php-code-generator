@@ -58,15 +58,11 @@ class FormGenerator extends Command
     {
         $source = __DIR__ . '/script.ts';
 
-        $text = "    'this is my own list {name}',\n    ";
+        $text = "    'this is my own list $name',\n    ";
 
         $pattern = '/list = \[(.*)];/s';
 
-        $replacements = [
-            'name' => $name,
-        ];
-
-        $this->operation('append')->perform($source, $text, $pattern, $replacements);
+        $this->operation('append')->perform($source, $text, $pattern, []);
     }
 
     /**

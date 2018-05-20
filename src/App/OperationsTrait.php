@@ -5,6 +5,7 @@ namespace Alexecus\Spawner\App;
 use Alexecus\Spawner\Operations\Append;
 use Alexecus\Spawner\Operations\Copy;
 use Alexecus\Spawner\Operations\Template;
+use Alexecus\Spawner\Operations\Notify;
 
 /**
  *
@@ -20,6 +21,7 @@ trait OperationsTrait
         'copy' => Copy::class,
         'append' => Append::class,
         'template' => Template::class,
+        'notify' => Notify::class,
     ];
 
     /**

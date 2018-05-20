@@ -4,7 +4,7 @@ namespace Alexecus\Spawner\Definition;
 
 use \ReflectionMethod;
 
-trait DefinitionCommandInputs
+trait DefinitionInputs
 {
     public function handleInput($name, $options)
     {
@@ -21,13 +21,21 @@ trait DefinitionCommandInputs
                 } else {
                     if ($param->isDefaultValueAvailable()) {
                         $arguments[] = $param->getDefaultValue();
+                        continue;
                     }
 
-                    // throw an exception here
+                    new \RuntimeException("Missing argument `$key` for definition `$name`");
                 }
             }
 
-            return $this->$name(...$arguments);
+            $return = $this->$name(...$arguments);
+
+            // terminate directive
+            if (isset($options['terminate']) && !$return) {
+                exit;
+            } 
+
+            return $return;
         }
     }
 }

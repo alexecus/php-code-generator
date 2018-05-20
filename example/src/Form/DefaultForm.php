@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-class ContactForm implements FormInterface
+class DefaultForm implements FormInterface
 {
     public function definition()
     {
