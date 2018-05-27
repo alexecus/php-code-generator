@@ -27,7 +27,8 @@ class DefinitionCommand extends Command
 
     public function configure()
     {
-        ['command' => $command, 'description' => $description] = $this->yaml;
+        $command = $this->yaml['command'];
+        $description = $this->yaml['description'];
 
         $this
             ->setName($command)
@@ -46,10 +47,6 @@ class DefinitionCommand extends Command
                 $vars[$key] = $this->handleInput($action, $input);
             }
         }
-
-        // d($this->root);
-        // d($vars);
-        // exit;
 
         $operations = $this->yaml['actions'] ?? [];
 

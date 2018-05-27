@@ -2,7 +2,8 @@
 
 namespace Alexecus\Spawner\Definition;
 
-use \ReflectionMethod;
+use ReflectionMethod;
+use RuntimeException;
 
 trait DefinitionInputs
 {
@@ -24,14 +25,16 @@ trait DefinitionInputs
                         continue;
                     }
 
-                    new \RuntimeException("Missing argument `$key` for definition `$name`");
+                    new RuntimeException("Missing argument `$key` for definition `$name`");
                 }
             }
+
+            d($arguments);
 
             $return = $this->$name(...$arguments);
 
             // terminate directive
-            if (isset($options['terminate']) && !$return) {
+            if (!empty($options['terminate']) && !$return) {
                 exit;
             } 
 

@@ -10,7 +10,9 @@ trait DefinitionOperations
 {
     public function handleOperation($name, $options, $vars)
     {
-        if ($this->hasOperation($name)) {
+        $instance = $this->operation($name);
+
+        if ($instance) {
             $arguments = [];
 
             // Code for the IF directive

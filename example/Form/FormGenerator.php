@@ -31,7 +31,10 @@ class FormGenerator extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $path = $this->ask('Where to generate this form ?', '/src/Form', [
-            'empty' => ['message' => 'Form should not be empty'],
+            'empty' => [
+                'message' => 'Form should not be empty',
+                'options' => ['Form'],
+            ],
         ]);
 
         // inputs

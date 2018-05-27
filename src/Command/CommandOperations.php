@@ -2,27 +2,35 @@
 
 namespace Alexecus\Spawner\Command;
 
+use Alexecus\Spawner\Managers\OperationsManager;
+
 trait CommandOperations
 {
-    private $operations = [];
+    /**
+     * @var OperationsManager
+     */
+    protected $operations;
 
-    public function setOperations($operations)
+    /**
+     *
+     */
+    public function setOperations(OperationsManager $operations)
     {
         $this->operations = $operations;
     }
 
-    public function hasOperation($operation)
+    /**
+     * Get the specific operation instance
+     *
+     * @param string $id The operation ID
+     * @return void
+     */
+    public function operation($id)
     {
-        return isset($this->operations[$operation]);
-    }
+        $operation = $this->operations->getOperation($id);
 
-    public function operation($operation)
-    {
-        if (isset($this->operations[$operation])) {
-            $instance = $this->operations[$operation];
-            $instance->setOutput($this->style);
+        $operation->setOutput($this->style);
 
-            return $instance;
-        }
+        return $operation;
     }
 }

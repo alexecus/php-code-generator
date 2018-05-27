@@ -15,6 +15,9 @@ inputs:
       validators:
         empty:
           message: Form cannot be empty
+        ends_with:
+          message: Name should end with `Form`
+          options: ['Form']
 
     template:
       input: confirm

@@ -2,50 +2,50 @@
 
 namespace Alexecus\Spawner\Input;
 
-use Symfony\Component\Console\Question\Question;
+use RuntimeException;
 
-use Alexecus\Spawner\Input\Validators\EmptyValidator;
-use Alexecus\Spawner\Input\Validators\EndsWithValidator;
-use Alexecus\Spawner\Input\Validators\StartsWithValidator;
+use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Style\SymfonyStyle;
+
+use Alexecus\Spawner\Managers\ValidatorsManager;
 
 class AskCommand
 {
     /**
-     * Defines the available validators
-     *
-     * @var array
+     * @var SymfonyStyle
      */
-    private $validators = [
-        'empty' => EmptyValidator::class,
-        'ends_with' => EndsWithValidator::class,
-        'starts_with' => StartsWithValidator::class,
-    ];
+    private $style;
 
-    public function __construct($style)
+    /**
+     * @var ValidatorsManager
+     */
+    private $validators;
+    
+    public function __construct(SymfonyStyle $style, ValidatorsManager $validators)
     {
         $this->style = $style;
+        $this->validators = $validators;
     }
 
-    public function ask($message, $default, $validators = [], $normalizers = [])
+    public function ask($message, $default, $validations = [])
     {
         $question = new Question($message, $default);
 
-        foreach ($validators as $key => $validator) {
-            if (isset($this->validators[$key]) && isset($validator['message'])) {
-                $class = $this->validators[$key];
-                $instance = new $class($validator['message']);
+        foreach ($validations as $key => $validation) {
+            $validator = $this->validators->getValidator($key);
 
-                $options = $validator['options'] ?? [];
+            if ($validator) {
+                $question->setValidator(function ($answer) use ($validator, $validation) {
+                    $message = $validation['message'] ?? "Failed $key validation for value $answer";
+                    $options = $validation['options'] ?? [];
 
-                $question->setValidator(function ($answer) use ($instance, $options) {
-                    $valid = $instance->validate($answer, $options);
-                    $message = $instance->getMessage();
+                    $valid = $validator->validate($answer, $options);
 
-                    if (!$valid) {
-                        throw new \RuntimeException($message);
+                    if ($validator->validate($answer, $options)) {
+                        return $answer;
                     }
 
-                    return $answer;
+                    throw new RuntimeException($message);
                 });
             }
         }

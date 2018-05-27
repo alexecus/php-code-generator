@@ -10,11 +10,8 @@ inputs:
         normalizers:
             - trim
         validators:
-            - empty:
-                message: Name of the form should not be empty
-            - ends_with:
-                message: The form name should end with the word Form
-                options: ['Form']
+            empty: ['Form should not be empty']
+            ends_with: ['The form name should end with the word Form', 'Form']
 
     - confirm:
         id: confirm_twig

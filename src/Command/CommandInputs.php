@@ -13,7 +13,7 @@ trait CommandInputs
      */
     public function ask($message, $default, $validators = [], $normalizers = [])
     {
-        $command = new AskCommand($this->style);
+        $command = new AskCommand($this->style, $this->validators);
 
         return $command->ask($message, $default, $validators, $normalizers);
     }

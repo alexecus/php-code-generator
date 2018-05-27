@@ -1,16 +1,15 @@
 <?php
 
-namespace Alexecus\Spawner\Input\Validators;
+namespace Alexecus\Spawner\Validators;
 
 class StartsWithValidator extends AbstractValidator
 {
     /**
      * @{inheritdoc}
      */
-    public function validate($value, $options)
+    public function validate($value, $options = [])
     {
-        list($needle) = $options;
-
+        $needle = $options[0];
         $length = strlen($needle);
 
         return substr($value, 0, $length) === $needle;
