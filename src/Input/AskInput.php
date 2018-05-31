@@ -9,25 +9,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 use Alexecus\Spawner\Managers\ValidatorsManager;
 
-class AskCommand
+class AskInput extends AbstractInput
 {
-    /**
-     * @var SymfonyStyle
-     */
-    private $style;
-
-    /**
-     * @var ValidatorsManager
-     */
-    private $validators;
-    
-    public function __construct(SymfonyStyle $style, ValidatorsManager $validators)
-    {
-        $this->style = $style;
-        $this->validators = $validators;
-    }
-
-    public function ask($message, $default, $validations = [])
+    public function perform($message, $default, $validations = [])
     {
         $question = new Question($message, $default);
 
@@ -50,6 +34,6 @@ class AskCommand
             }
         }
 
-        return $this->style->askQuestion($question);
+        return $this->output->askQuestion($question);
     }
 }

@@ -9,10 +9,12 @@ trait DefinitionInputs
 {
     public function handleInput($name, $options)
     {
-        if (method_exists($this, $name)) {
+        $instance = $this->input($name);
+
+        if ($instance) {
             $arguments = [];
 
-            $params = (new ReflectionMethod(self::class, $name))->getParameters();
+            $params = (new ReflectionMethod($instance, 'perform'))->getParameters();
 
             foreach ($params as $param) {
                 $key = $param->getName();
@@ -29,9 +31,7 @@ trait DefinitionInputs
                 }
             }
 
-            d($arguments);
-
-            $return = $this->$name(...$arguments);
+            $return = $instance->perform(...$arguments);
 
             // terminate directive
             if (!empty($options['terminate']) && !$return) {

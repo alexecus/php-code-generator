@@ -2,51 +2,35 @@
 
 namespace Alexecus\Spawner\Command;
 
-use Symfony\Component\Console\Question\Question;
-
-use Alexecus\Spawner\Input\AskCommand;
+use Alexecus\Spawner\Managers\InputsManager;
 
 trait CommandInputs
 {
     /**
-     *
+     * @var InputsManager
      */
-    public function ask($message, $default, $validators = [], $normalizers = [])
-    {
-        $command = new AskCommand($this->style, $this->validators);
-
-        return $command->ask($message, $default, $validators, $normalizers);
-    }
+    protected $inputs;
 
     /**
      *
      */
-    public function confirm($message)
+    public function setInputs(InputsManager $inputs)
     {
-        return $this->style->confirm($message);
+        $this->inputs = $inputs;
     }
 
     /**
+     * Get the specific input instance
      *
+     * @param string $id The input ID
+     * @return void
      */
-    public function success($message)
+    public function input($id)
     {
-        return $this->style->success($message);
-    }
+        $input = $this->inputs->getInput($id);
 
-    /**
-     *
-     */
-    public function warning($message)
-    {
-        return $this->style->warning($message);
-    }
+        $input->setOutput($this->style);
 
-    /**
-     *
-     */
-    public function error($message)
-    {
-        return $this->style->error($message);
+        return $input;
     }
 }

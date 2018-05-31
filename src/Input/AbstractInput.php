@@ -1,10 +1,10 @@
 <?php
 
-namespace Alexecus\Spawner\Operations;
+namespace Alexecus\Spawner\Input;
 
 use Symfony\Component\Console\Style\StyleInterface;
 
-abstract class AbstractOperation
+abstract class AbstractInput
 {
     protected $output;
     protected $validators;
