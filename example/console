@@ -6,6 +6,5 @@ require __DIR__ . '/../vendor/autoload.php';
 $app = new \Alexecus\Spawner\App\Application();
 
 $app->addDefinition(__DIR__ . '/Form/definition.yml', __DIR__);
-// $app->addCommand(\Alexecus\Example\Form\FormGenerator::class);
 
 $app->run();

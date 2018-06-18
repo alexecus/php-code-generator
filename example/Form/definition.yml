@@ -37,7 +37,7 @@ actions:
 
     - action: copy
       if: template
-      source: Form/template/template.html.twig
+      source: Form/template/template.html
       target: ${path}/template.html.twig
 
     - action: notify
