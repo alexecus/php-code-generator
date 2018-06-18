@@ -3,10 +3,8 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$app = new \Alexecus\Spawner\Application();
+$app = new \Alexecus\Spawner\App\Application();
 
-$app->setRoot(__DIR__);
-
-$app->add(\Alexecus\Example\Form\FormGenerator::class);
+$app->addDefinition(__DIR__ . '/Form/definition.yml', __DIR__);
 
 $app->run();

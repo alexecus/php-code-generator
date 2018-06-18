@@ -1,0 +1,45 @@
+name: Form
+command: generate:form
+description: Generates a form plugin
+
+inputs:
+    path:
+      input: ask
+      message: Where to generate the form ?
+      default: src/Form
+
+    name:
+      input: ask
+      message: What is the form name ?
+      default: DefaultForm
+      validators:
+        empty:
+          message: Form cannot be empty
+        ends_with:
+          message: Name should end with `Form`
+          options: ['Form']
+
+    template:
+      input: confirm
+      message: Do you want to have a twig template also ?
+
+    confirm:
+      input: confirm
+      message: Do you confirm generation ?
+      terminate: yes
+
+actions:
+    - action: template
+      source: Form/template/Form.php.twig
+      target: ${path}/${name}.php
+      replacements:
+        form_name: ${name}
+
+    - action: copy
+      if: template
+      source: Form/template/template.html
+      target: ${path}/template.html.twig
+
+    - action: notify
+      message: Form generated successfully
+      type: success
