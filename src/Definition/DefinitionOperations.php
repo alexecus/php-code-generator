@@ -15,18 +15,7 @@ trait DefinitionOperations
         if ($instance) {
             $arguments = [];
 
-            // Code for the IF directive
-            if (isset($options['if'])) {
-                $condition = $options['if'];
-
-                if (isset($vars[$condition]) && !$vars[$condition]) {
-                    return;
-                }
-            }
-
             $instance = $this->operation($name);
-            $options = $this->handleReplacements($options, $vars);
-
             $params = (new ReflectionMethod($instance, 'perform'))->getParameters();
 
             foreach ($params as $param) {
@@ -51,24 +40,5 @@ trait DefinitionOperations
 
             $instance->perform(...$arguments);
         }
-    }
-
-    private function handleReplacements($options, $vars)
-    {
-        $result = [];
-
-        foreach ($options as $key => $value) {
-            if (is_array($value)) {
-                $result[$key] = $this->handleReplacements($value, $vars);
-            } elseif (is_string($value)) {
-                $result[$key] = preg_replace_callback('/\$\{(.*?)\}/', function ($matches) use ($vars) {
-                    list($string, $match) = $matches;
-
-                    return isset($vars[$match]) ? $vars[$match] : $string;
-                }, $value);
-            }
-        }
-
-        return $result;
     }
 }

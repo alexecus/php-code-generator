@@ -69,6 +69,7 @@ class Application
         $this->addOperation('copy', Operations\Copy::class);
         $this->addOperation('notify', Operations\Notify::class);
         $this->addOperation('template', Operations\Template::class);
+        $this->addOperation('yaml', Operations\Yaml::class);
 
         $this->addValidator('empty', Validators\EmptyValidator::class);
         $this->addValidator('starts_with', Validators\StartsWithValidator::class);
