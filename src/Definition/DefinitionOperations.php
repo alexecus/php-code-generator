@@ -2,9 +2,10 @@
 
 namespace Alexecus\Spawner\Definition;
 
-use Alexecus\Spawner\Resolver\PathResource;
-use \ReflectionMethod;
+use ReflectionMethod;
 use SebastianBergmann\CodeCoverage\RuntimeException;
+
+use Alexecus\Spawner\Resolver\PathResource;
 
 trait DefinitionOperations
 {

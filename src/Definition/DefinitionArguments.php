@@ -12,7 +12,7 @@ trait DefinitionArguments
         $result = [];
 
         foreach ($options as $key => $value) {
-            $key = $this->resolveArguments($key, $vars);
+            $key = $this->doReplaceArguments($key, $vars);
 
             if (is_array($value)) {
                 $result[$key] = $this->resolveArguments($value, $vars);

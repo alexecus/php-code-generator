@@ -2,11 +2,12 @@
 
 namespace Alexecus\Spawner\Operations;
 
-use Symfony\Component\Filesystem\Filesystem;
+use Exception;
 use Symfony\Component\Yaml\Yaml as Parser;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Yaml\Exception\ParseException;
 
 use Alexecus\Spawner\Resolver\PathResource;
-use Symfony\Component\Yaml\Exception\ParseException;
 
 class Yaml extends AbstractOperation
 {
@@ -28,14 +29,21 @@ class Yaml extends AbstractOperation
         $data = [];
 
         try {
-            $data = Parser::parse($target->getAbsolute());
+            $path = $target->getAbsolute();
+
+            if (file_exists($path)) {
+                $body = file_get_contents($path);
+                $data = Parser::parse($body);
+            }
         } catch (ParseException $e) {
             // handle invalid YAML scenario here
             throw $e;
+        } catch (Exception $e) {
+            // do nothing
         }
 
-        $data = array_replace($data, $append);
-        $yaml = Yaml::dump($data, 2, $spaces);
+        $data = array_replace_recursive($data, $append);
+        $yaml = Parser::dump($data, 2, $spaces);
 
         $this->filesystem->dumpFile($target->getAbsolute(), $yaml);
     }
