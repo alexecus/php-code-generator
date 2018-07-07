@@ -11,10 +11,12 @@ use Alexecus\Spawner\Command\Command;
 use Alexecus\Spawner\Managers\OperationsManager;
 use Alexecus\Spawner\Managers\ValidatorsManager;
 use Alexecus\Spawner\Managers\InputsManager;
+use Alexecus\Spawner\Managers\NormalizerManager;
 
 use Alexecus\Spawner\Operations;
 use Alexecus\Spawner\Validators;
 use Alexecus\Spawner\Input;
+use Alexecus\Spawner\Normalizers;
 
 /**
  * Class that bootstraps the generator application
@@ -37,6 +39,11 @@ class Application
     private $inputs;
 
     /**
+     * @var NormalizerManager
+     */
+    private $normalizers;
+
+    /**
      * Stores the command
      *
      * @var array
@@ -53,6 +60,7 @@ class Application
         $this->operations = Container::resolve(OperationsManager::class);
         $this->validators = Container::resolve(ValidatorsManager::class);
         $this->inputs = Container::resolve(InputsManager::class);
+        $this->normalizers = Container::resolve(NormalizerManager::class);
 
         $this->init();
     }
@@ -77,6 +85,8 @@ class Application
 
         $this->addInput('ask', Input\AskInput::class);
         $this->addInput('confirm', Input\ConfirmInput::class);
+
+        $this->addNormalizer('snake_case', Normalizers\SnakeCase::class);
     }
 
     /**
@@ -136,6 +146,7 @@ class Application
             $command->setOperations($this->operations);
             $command->setValidators($this->validators);
             $command->setInputs($this->inputs);
+            $command->setNormalizers($this->normalizers);
 
             $this->console->add($command);
         }
@@ -177,6 +188,17 @@ class Application
      * @param string $class The fully qualified class name
      */
     public function addInput($id, $class)
+    {
+        $this->inputs->setInput($id, Container::resolve($class));
+    }
+
+    /**
+     * Adds a new normalizer class
+     *
+     * @param string $id The instances ID
+     * @param string $class The fully qualified class name
+     */
+    public function addNormalizer($id, $class)
     {
         $this->inputs->setInput($id, Container::resolve($class));
     }
