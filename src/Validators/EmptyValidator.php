@@ -9,6 +9,8 @@ class EmptyValidator extends AbstractValidator
      */
     public function validate($value, $options = [])
     {
-        return !empty($value);
+        $value = trim($value);
+
+        return $value !== '';
     }
 }

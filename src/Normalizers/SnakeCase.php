@@ -9,8 +9,6 @@ class SnakeCase extends AbstractNormalizer
      */
     public function normalize($value)
     {
-        return strtolower(
-            preg_replace(['/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/'], '$1_$2', $value)
-        );
+        return preg_replace(['/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/'], '$1_$2', $value);
     }
 }

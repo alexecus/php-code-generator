@@ -3,7 +3,7 @@
 namespace Alexecus\Spawner\Definition;
 
 use ReflectionMethod;
-use SebastianBergmann\CodeCoverage\RuntimeException;
+use RuntimeException;
 
 use Alexecus\Spawner\Resolver\PathResource;
 
@@ -35,7 +35,7 @@ trait DefinitionOperations
                         continue;
                     }
 
-                    new \RuntimeException("Missing argument `$key` for definition `$name`");
+                    new RuntimeException("Missing argument `$key` for definition `$name`");
                 }
             }
 

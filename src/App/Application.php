@@ -200,6 +200,6 @@ class Application
      */
     public function addNormalizer($id, $class)
     {
-        $this->inputs->setInput($id, Container::resolve($class));
+        $this->normalizers->setNormalizer($id, Container::resolve($class));
     }
 }

@@ -24,6 +24,17 @@ trait CommandNormalizers
      */
     public function normalize($id, $value)
     {
-        return $this->normalizers->getNormalizer($id)->normalize($value);
+        $normalizer = $this->normalizers->getNormalizer($id);
+
+        // check if we have a registered normalizer with the specified ID
+        // if not just check if the a php method of that name exists and use
+        // that instead
+        if ($normalizer) {
+            $value = $normalizer->normalize($value);
+        } elseif (function_exists($id)) {
+            $value = $id($value);
+        }
+
+        return $value;
     }
 }

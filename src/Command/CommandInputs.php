@@ -30,6 +30,7 @@ trait CommandInputs
         $input = $this->inputs->getInput($id);
 
         $input->setOutput($this->style);
+        $input->setValidators($this->validators);
 
         return $input;
     }
