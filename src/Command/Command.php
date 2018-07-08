@@ -13,6 +13,7 @@ abstract class Command extends Base
     use CommandInputs;
     use CommandOperations;
     use CommandValidators;
+    use CommandNormalizers;
 
     /**
      * @var SymfonyStyle

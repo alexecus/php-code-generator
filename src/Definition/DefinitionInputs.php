@@ -34,9 +34,10 @@ trait DefinitionInputs
             $return = $instance->perform(...$arguments);
 
             // terminate directive
+            // if a terminate directive is present then stop script execution
             if (!empty($options['terminate']) && !$return) {
                 exit;
-            } 
+            }
 
             return $return;
         }

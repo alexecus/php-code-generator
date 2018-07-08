@@ -14,10 +14,18 @@ inputs:
       default: DefaultForm
       validators:
         empty:
-          message: Form cannot be empty
+          message: Form name cannot be empty
         ends_with:
           message: Name should end with `Form`
           options: ['Form']
+
+    id:
+      input: ask
+      message: What is the ID of the Form ?
+      default: ${name:(snake_case, strtolower)}
+      validators:
+        empty:
+          message: Form ID cannot be empty
 
     template:
       input: confirm
@@ -38,7 +46,14 @@ actions:
     - action: copy
       if: template
       source: Form/template/template.html
-      target: ${path}/template.html.twig
+      target: ${path}/${id}.template.html.twig
+
+    - action: yaml
+      target: Form/forms.yml
+      spaces: 2
+      append:
+        forms:
+          ${id}: ${path}/${name}
 
     - action: notify
       message: Form generated successfully

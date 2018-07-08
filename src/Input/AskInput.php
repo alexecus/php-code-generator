@@ -11,11 +11,11 @@ use Alexecus\Spawner\Managers\ValidatorsManager;
 
 class AskInput extends AbstractInput
 {
-    public function perform($message, $default, $validations = [])
+    public function perform($message, $default = null, $validators = [])
     {
         $question = new Question($message, $default);
 
-        foreach ($validations as $key => $validation) {
+        foreach ($validators as $key => $validation) {
             $validator = $this->validators->getValidator($key);
 
             if ($validator) {

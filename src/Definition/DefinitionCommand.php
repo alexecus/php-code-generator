@@ -13,6 +13,7 @@ class DefinitionCommand extends Command
 {
     use DefinitionInputs;
     use DefinitionOperations;
+    use DefinitionArguments;
 
     private $root;
     private $yaml;
@@ -40,21 +41,37 @@ class DefinitionCommand extends Command
         $vars = [];
         $inputs = $this->yaml['inputs'] ?? [];
 
-        foreach ($inputs as $key => $input) {
-            if (isset($input['input'])) {
-                $action = $input['input'];
+        foreach ($inputs as $key => $options) {
+            if (isset($options['input'])) {
+                $action = $options['input'];
+                $options = $this->resolveArguments($options, $vars);
 
-                $vars[$key] = $this->handleInput($action, $input);
+                $vars[$key] = $this->handleInput($action, $options);
             }
         }
 
+        d($vars);
+        exit;
+
         $operations = $this->yaml['actions'] ?? [];
 
-        foreach ($operations as $key => $operation) {
-            if (isset($operation['action'])) {
-                $action = $operation['action'];
+        foreach ($operations as $key => $options) {
+            if (isset($options['action'])) {
+                $action = $options['action'];
 
-                $this->handleOperation($action, $operation, $vars);
+                $options = $this->resolveArguments($options, $vars);
+
+                // Code for the IF directive
+                // don't execute an operation if an `if` condition is present
+                if (isset($options['if'])) {
+                    $condition = $options['if'];
+
+                    if (isset($vars[$condition]) && !$vars[$condition]) {
+                        continue;
+                    }
+                }
+
+                // $this->handleOperation($action, $options, $vars);
             }
         }
     }
