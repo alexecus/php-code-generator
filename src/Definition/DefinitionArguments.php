@@ -2,9 +2,6 @@
 
 namespace Alexecus\Spawner\Definition;
 
-use ReflectionMethod;
-use RuntimeException;
-
 trait DefinitionArguments
 {
     private function resolveArguments($options, $vars)

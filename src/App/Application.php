@@ -82,6 +82,7 @@ class Application
         $this->addValidator('empty', Validators\EmptyValidator::class);
         $this->addValidator('starts_with', Validators\StartsWithValidator::class);
         $this->addValidator('ends_with', Validators\EndsWithValidator::class);
+        $this->addValidator('contains', Validators\ContainsValidator::class);
 
         $this->addInput('ask', Input\AskInput::class);
         $this->addInput('confirm', Input\ConfirmInput::class);

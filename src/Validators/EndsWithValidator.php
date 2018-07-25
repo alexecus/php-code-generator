@@ -2,6 +2,9 @@
 
 namespace Alexecus\Spawner\Validators;
 
+/**
+ * Validate that the user input ends in a certain string
+ */
 class EndsWithValidator extends AbstractValidator
 {
     /**

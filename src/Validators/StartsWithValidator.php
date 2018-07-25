@@ -2,6 +2,9 @@
 
 namespace Alexecus\Spawner\Validators;
 
+/**
+ * Validate that the user input starts with a certain string
+ */
 class StartsWithValidator extends AbstractValidator
 {
     /**
