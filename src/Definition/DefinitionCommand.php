@@ -50,9 +50,6 @@ class DefinitionCommand extends Command
             }
         }
 
-        d($vars);
-        exit;
-
         $operations = $this->yaml['actions'] ?? [];
 
         foreach ($operations as $key => $options) {
@@ -71,7 +68,7 @@ class DefinitionCommand extends Command
                     }
                 }
 
-                // $this->handleOperation($action, $options, $vars);
+                $this->handleOperation($action, $options, $vars);
             }
         }
     }
